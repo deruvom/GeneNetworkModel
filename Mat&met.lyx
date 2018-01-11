@@ -1,0 +1,556 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\rightmargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Materials and Methods
+\end_layout
+
+\begin_layout Standard
+Considering three molecules (auxin, PLETHORA, ARR1) reacting and/or diffusing
+ along a 1D tissue, we built a system of partial differential equations
+ (PDEs):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+\frac{\partial ARR1(x,t)}{\partial t}= & f(ARR1,PLT,aux)\\
+\frac{\partial PLT(x,t)}{\partial t}= & g(ARR1,PLT,aux)+D_{PLT}\cdot\nabla^{2}PLT(x,t)\\
+\frac{\partial aux(x,t)}{\partial t}= & h(ARR1,PLT,aux)+D_{aux}\cdot\nabla^{2}aux(x,t)+P_{PIN}\cdot\nabla aux(x,t)
+\end{cases}\label{eq:system}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where ARR1 is a non diffusible molecule and PLT (PLT1,2) and aux (auxin)
+ are diffusible molecules with diffusion coefficient 
+\begin_inset Formula $D_{PLT}$
+\end_inset
+
+ and 
+\begin_inset Formula $D_{aux}$
+\end_inset
+
+, respectively.
+ The three components interact mutually with local reactions 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+.
+ While this system stems from Turing reaction-diffusion systems, here our
+ system includes an additional advection term, which accounts for the polar
+ auxin transport driven by PIN proteins.
+ As we are in a 1D system, this transport can be considered a unidirectional
+ flow, with velocity 
+\begin_inset Formula $P_{PIN}$
+\end_inset
+
+ (PIN permeability).
+\end_layout
+
+\begin_layout Standard
+We defined the reaction terms 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ as: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{cc}
+f(ARR1,PLT,aux)=k1\cdot ARR1+k2\cdot PLT+k3\cdot aux\\
+g(ARR1,PLT,aux)=k4\cdot ARR1+k5\cdot PLT+k6\cdot aux\\
+h(ARR1,PLT,aux)=k7\cdot ARR1+k8\cdot PLT+k9\cdot aux
+\end{array}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $k_{i},i=1,2,...9$
+\end_inset
+
+ are the coefficients of the mutual reactions.
+\end_layout
+
+\begin_layout Subsection
+Linear stability analysis 
+\end_layout
+
+\begin_layout Standard
+In order to perform linear stability analysis, we first linearize the system
+ around the steady state, i.e.
+ the equilibrium point, calculating:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(ARR1*,PLT*,aux*)=g(ARR1*,PLT*,aux*)=h(ARR1*,PLT*,aux*)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The linearization of the system is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathbf{w}_{t}=\gamma\mathbf{J}_{w}+\mathbf{D}\triangle\mathbf{w}+\mathbf{P}\nabla\mathbf{w}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+, where 
+\begin_inset Formula $\mathbf{w}_{t}$
+\end_inset
+
+
+\begin_inset Formula $=\left(\begin{array}{cc}
+ARR1\\
+PLT\\
+aux
+\end{array}\right)_{t}$
+\end_inset
+
+is the time derivative of vector 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+ of the three components, 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is a coefficient and the matrix 
+\begin_inset Formula $\mathbf{J}_{w}=\left(\begin{array}{cc}
+f'(ARR1,PLT,aux)\\
+g'(ARR1,PLT,aux)\\
+h'(ARR1,PLT,aux)
+\end{array}\right)$
+\end_inset
+
+ is the Jacobian matrix, which represents the first partial derivative of
+ 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $ARR1,PLT,aux$
+\end_inset
+
+.
+ The Jacobian can be rewritten as 
+\begin_inset Formula $J=\left(\begin{array}{ccc}
+f_{ARR1} & f_{PLT} & f_{aux}\\
+g_{ARR1} & g_{PLT} & g_{aux}\\
+h_{ARR1} & h_{PLT} & h_{aux}
+\end{array}\right)$
+\end_inset
+
+.
+ D is the diffusivity matrix 
+\begin_inset Formula $D=\left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & D_{PLT} & 0\\
+0 & 0 & D_{aux}
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $P$
+\end_inset
+
+ is the permeability matrix, 
+\begin_inset Formula $P$
+\end_inset
+
+
+\begin_inset Formula $=\left(\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & -P_{PIN}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The characteristic polynomial of the linearized system is defined as: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Det[\lambda\mathbf{I}-\gamma\mathbf{J}+\mathbf{D}k^{2}-\mathbf{P}ik]=0
+\end{equation}
+
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{I}$
+\end_inset
+
+ is the identity matrix and 
+\begin_inset Formula $k$
+\end_inset
+
+ is the wavenumber.
+ 
+\end_layout
+
+\begin_layout Standard
+Rewriting in a matrix form: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+\lambda-\gamma\cdot f_{ARR1} & -\gamma\cdot f_{PLT} & -\gamma\cdot f_{aux}\\
+-\gamma\cdot g_{ARR1} & \lambda-\gamma\cdot g_{PLT}+k^{2}\cdot D_{PLT} & -\gamma\cdot g_{aux}\\
+-\gamma\cdot h_{ARR1} & -\gamma\cdot h_{PLT} & \lambda-\gamma\cdot h_{aux}+k^{2}\cdot D_{aux}+P_{PIN}\cdot ik
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the absence of diffusion, the system is stable.
+ In the presence of diffusion, the fixed point becomes unstable.
+ Considering 
+\begin_inset Formula $\gamma=1$
+\end_inset
+
+, becomes: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\lambda^{3}+\lambda^{2}a_{1}(k^{2})+\lambda a_{2}(k^{2})+a_{3}(k^{2})=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where: 
+\end_layout
+
+\begin_layout Standard
+\align block
+\begin_inset Formula $a_{1}(k^{2})=-f_{ARR1}-g_{PLT}-h_{aux}+P_{PIN}ik^{2}(D_{PLT}+D_{aux})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $a_{2}(k^{2})=k^{4}D_{aux}D_{PLT}-P_{PIN}ik^{3}-D_{PLT}-k^{2}(g_{PLT}D_{aux}+h_{aux}D_{PLT}+f_{ARR1}D_{aux}+f_{ARR1}D_{PLT})-P_{PIN}ik(f_{ARR1}+g_{PLT})+g_{PLT}h_{aux}+h_{aux}f_{ARR1}+f_{ARR1}g_{PLT}-g_{aux}h_{PLT}-h_{ARR1}f_{aux}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align block
+\begin_inset Formula $a_{3}(k^{2})=k^{4}D_{PLT}D_{aux}f_{ARR1}-P_{PIN}ik^{3}D_{PLT}f_{ARR1}+k^{2}(f_{ARR1}h_{aux}D_{PLT}+g_{PLT}f_{ARR1}D_{aux}-f_{PLT}g_{ARR1}D_{aux}-f_{aux}h_{ARR1}D_{PLT})+P_{PIN}ik(f_{ARR1}g_{PLT}-f_{PLT}g_{ARR1})-f_{ARR1}g_{PLT}h_{aux}-f_{PLT}g_{aux}h_{ARR1}-f_{aux}g_{ARR1}h_{PLT}+f_{PLT}g_{ARR1}h_{aux}+g_{aux}h_{PLT}f_{ARR1}+f_{aux}h_{ARR1}g_{PLT}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The parameter 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ can assume real or complex values 
+\begin_inset Formula $\lambda=p+iq$
+\end_inset
+
+.
+ In both cases, the sign of the real part of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is crucially important to determine whether the pattern will grow (
+\begin_inset Formula $Re(\lambda)>0$
+\end_inset
+
+) or not (
+\begin_inset Formula $Re(\lambda)<0$
+\end_inset
+
+).
+ To ensure the formation of a diffusion-driven instability pattern, we must
+ check that the system is stable without diffusion (
+\begin_inset Formula $Re(\lambda)<0$
+\end_inset
+
+ if 
+\begin_inset Formula $k=0$
+\end_inset
+
+) and unstable upon the perturbation introduced by diffusion (
+\begin_inset Formula $Re(\lambda)>0$
+\end_inset
+
+ if 
+\begin_inset Formula $k>0$
+\end_inset
+
+).
+ In the latter case at least one of these necessary conditions must hold:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{1}(k^{2})<0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{3}(k^{2})<0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{1}(k^{2})\cdot a_{2}(k^{2})-a_{3}(k^{2})<0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the system we are studying, the advective term introduces complex values
+ for 
+\begin_inset Formula $\lambda=p+iq$
+\end_inset
+
+, which may lead to the formation of temporally varying patterns.
+ In order to check if the pattern is stable over time, additional constraints
+ apply.
+ In particular, the following conditions represent one set of conditions
+ that ensure the existence of a temporally stable spatial pattern:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{1}(k^{2})\cdot a_{2}(k^{2})-a_{3}(k^{2})>0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{2}(k^{2})>0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{3}(k^{2})<0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now calculate the Jacobian around the steady state, obtaining the interaction
+ constants 
+\begin_inset Formula $k_{i},i=1,2,...9$
+\end_inset
+
+.
+ Starting from our system of PDEs 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:system"
+
+\end_inset
+
+, 
+\color red
+we integrated the molecular interactions between 
+\begin_inset Formula $ARR1$
+\end_inset
+
+ and auxin and between 
+\begin_inset Formula $ARR1$
+\end_inset
+
+ and 
+\begin_inset Formula $PLT1$
+\end_inset
+
+ in a three-component network
+\color inherit
+, where 
+\begin_inset Formula $ARR1$
+\end_inset
+
+, auxin and 
+\begin_inset Formula $PLT$
+\end_inset
+
+ are the nodes and the mutual reactions 
+\begin_inset Formula $k_{i}$
+\end_inset
+
+ are the edges.
+ This model allows for the derivation of all the possible combinations of
+ the sign of the interactions (positive or negative arrows).
+ Each combination is a topology that generates a specific pattern.
+\end_layout
+
+\begin_layout Standard
+Our aim is to derive the minimal topology able to generate a temporally
+ stable pattern according to the above conditions.
+ Given the high number of possible combination of the parameters 
+\begin_inset Formula $k_{i}$
+\end_inset
+
+, we first checked which combination was compatible with our experimental
+ evidence: 
+\end_layout
+
+\begin_layout Standard
+- 
+\begin_inset Formula $ARR1$
+\end_inset
+
+ is  out of phase with auxin and PLT
+\end_layout
+
+\begin_layout Standard
+- 
+\begin_inset Formula $k4$
+\end_inset
+
+ and 
+\begin_inset Formula $k7$
+\end_inset
+
+ are 
+\begin_inset Formula $<0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document
